@@ -1,0 +1,166 @@
+<!-- frontend implementation -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>International Football Predictor</title>
+  <style>
+    body {
+      max-width: 680px;
+      margin: 48px auto;
+      padding: 0 20px;
+      font-family: system-ui, sans-serif;
+      line-height: 1.5;
+      color: #172330;
+    }
+    label { display: block; margin-top: 18px; }
+    select, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      font: inherit;
+    }
+    button {
+      margin-top: 24px;
+      background: #174d39;
+      color: white;
+      border: 0;
+      cursor: pointer;
+    }
+    .error { color: #a11; }
+    .result {
+      margin-top: 28px;
+      padding: 20px;
+      background: #f0f5f2;
+    }
+    .note { font-size: 0.9rem; color: #52606d; }
+    .limitations {
+      margin-top: 28px;
+      padding: 16px 20px;
+      border: 1px solid #d5dfe5;
+      border-radius: 8px;
+      background: #f8fafb;
+      color: #52606d;
+      font-size: 0.9rem;
+    }
+
+    .limitations h2 {
+      margin-top: 0;
+      font-size: 1rem;
+      color: #172330;
+    }
+
+    .limitations p:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+  
+</head>
+<body>
+  <h1>International Football Predictor</h1>
+  <p>Estimate match outcome probabilities using historical results.</p>
+
+  <form method="post">
+    <label for="home_team">Home / first-listed team</label>
+    <select id="home_team" name="home_team" required>
+      <option value="">Choose a team</option>
+      {% for team in teams %}
+        <option value="{{ team }}"
+          {% if team == home_team %}selected{% endif %}>
+          {{ team }}
+        </option>
+      {% endfor %}
+    </select>
+
+    <label for="away_team">Away / second-listed team</label>
+    <select id="away_team" name="away_team" required>
+      <option value="">Choose a team</option>
+      {% for team in teams %}
+        <option value="{{ team }}"
+          {% if team == away_team %}selected{% endif %}>
+          {{ team }}
+        </option>
+      {% endfor %}
+    </select>
+
+    <label for="venue">Venue</label>
+    <select id="venue" name="venue">
+      <option value="neutral"
+        {% if venue == "neutral" %}selected{% endif %}>
+        Neutral venue
+      </option>
+      <option value="home"
+        {% if venue == "home" %}selected{% endif %}>
+        First-listed team hosts
+      </option>
+    </select>
+
+    <button type="submit">Predict match</button>
+  </form>
+
+  <aside class="limitations" aria-labelledby="limitations-heading">
+  <h2 id="limitations-heading">About these predictions</h2>
+
+  <p>
+    Predictions use historical match results, team ratings,
+    scoring form, and venue information. Current lineups,
+    injuries, and tactical changes are not included.
+  </p>
+
+  <p>
+    Historical evaluation showed weaker performance on World Cup
+    finals than across all competitive matches. These probabilities
+    are estimates, not guarantees.
+  </p>
+
+  <p>
+    Results update when the saved dataset and team-state snapshot
+    are refreshed; this app does not fetch live match results.
+  </p>
+  <div class="note">
+    <p>
+      Last recorded competitive match:
+      <br>
+      {{ result.home_team }}:
+      {{ result.home_last_match[:10] if result.home_last_match else "Unavailable" }}
+      <br>
+      {{ result.away_team }}:
+      {{ result.away_last_match[:10] if result.away_last_match else "Unavailable" }}
+    </p>
+
+    <p>
+      Historical teams remain selectable. Their predictions use their
+      last available ratings and form; team strength is not adjusted
+      for years without recorded matches.
+    </p>
+  </div>
+</aside>
+
+  {% if error %}
+    <p class="error" role="alert">{{ error }}</p>
+  {% endif %}
+
+  {% if result %}
+    <section class="result">
+      <h2>{{ result.home_team }} vs {{ result.away_team }}</h2>
+
+      <p>{{ result.home_team }} win:
+        <strong>{{ "%.1f"|format(result.home_win * 100) }}%</strong>
+      </p>
+      <p>Draw:
+        <strong>{{ "%.1f"|format(result.draw * 100) }}%</strong>
+      </p>
+      <p>{{ result.away_team }} win:
+        <strong>{{ "%.1f"|format(result.away_win * 100) }}%</strong>
+      </p>
+
+      <p class="note">{{ result.target_definition }}</p>
+      <p class="note">
+        Results available through {{ result.data_cutoff[:10] }}.
+        Model: {{ result.model_version }}.
+      </p>
+    </section>
+  {% endif %}
+</body>
+</html>
