@@ -64,7 +64,7 @@ that deployment artifact.
 
 ## Research notebook
 
-`code.ipynb` documents model development and includes saved evaluation
+`code.ipynb` is the main document for ML model development, which includes saved evaluation
 tables and figures.
 
 Some historical recovery, diagnostic, and artifact-preparation sections
