@@ -79,6 +79,12 @@ state included in `artifacts/`. No notebook execution is required.
 `archive.ipynb` preserves superseded experiments and debugging history.
 It is not the active training or application workflow.
 
+## Live demo
+
+[Open the football predictor](https://international-football-predictor.onrender.com/)
+
+The free hosting service may take a moment to start after inactivity.
+
 ## Run locally
 
 Use the Python environment compatible with the saved model artifacts.
