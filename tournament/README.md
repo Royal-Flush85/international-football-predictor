@@ -137,22 +137,6 @@ scoring form retain the notebook's sequential ordering within each date;
 this preserves the evaluated feature definitions but does not establish
 actual intraday kickoff order. Rebuild state when correcting earlier results.
 
-## Screenshots
-
-### Match prediction
-
-Home-win, draw, and away-win probabilities, with the model version
-and results-data cutoff.
-
-![Match prediction showing outcome probabilities](docs/images/match-prediction.png)
-
-### Tournament playground
-
-Estimated chances of reaching each stage and winning across
-10,000 simplified tournament simulations.
-
-![Eight-team tournament probability table](docs/images/tournament-probabilities.png)
-
 ## Notebook publication hygiene
 
 Notebook files contain saved outputs as well as code. Before committing:
