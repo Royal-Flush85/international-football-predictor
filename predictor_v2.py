@@ -3,7 +3,7 @@ from pathlib import Path
 import joblib
 import numpy as np
 
-from features import build_match_features
+from features_v2 import build_match_features
 
 def display_percentages(probabilities):
     """Round to tenths of a percent while preserving a 100% total."""
@@ -114,6 +114,6 @@ class MatchPredictor:
 
 
 if __name__ == "__main__":
-    artifact_dir = Path(__file__).resolve().parent / "artifacts"
+    artifact_dir = Path(__file__).resolve().parent / "artifacts_v2"
     predictor = MatchPredictor(artifact_dir)
     print(predictor.predict("Japan", "Australia"))

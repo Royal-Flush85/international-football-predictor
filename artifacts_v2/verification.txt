@@ -1,0 +1,5 @@
+Historical feature parity: 31089 matches passed.
+Prediction repeatability, state immutability, reload, probabilities, display totals, and invalid-input checks passed.
+Data cutoff: 2026-06-27T00:00:00
+Existing application artifacts were not changed.
+Flask GET, neutral/home POST, invalid input messages, metadata and state immutability passed.

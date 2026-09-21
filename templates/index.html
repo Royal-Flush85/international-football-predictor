@@ -146,13 +146,13 @@
       <h2>{{ result.home_team }} vs {{ result.away_team }}</h2>
 
       <p>{{ result.home_team }} win:
-        <strong>{{ "%.1f"|format(result.home_win * 100) }}%</strong>
+        <strong>{{ result.home_percent }}%</strong>
       </p>
       <p>Draw:
-        <strong>{{ "%.1f"|format(result.draw * 100) }}%</strong>
+        <strong>{{ result.draw_percent }}%</strong>
       </p>
       <p>{{ result.away_team }} win:
-        <strong>{{ "%.1f"|format(result.away_win * 100) }}%</strong>
+        <strong>{{ result.away_percent }}%</strong>
       </p>
 
       <p class="note">{{ result.target_definition }}</p>

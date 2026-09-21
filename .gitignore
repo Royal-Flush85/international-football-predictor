@@ -12,3 +12,5 @@ checkpoints/
 results_cleaned.csv
 results_features.csv
 world_cup_xgb_model.joblib
+# Local editor preferences
+.vscode/
