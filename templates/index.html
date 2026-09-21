@@ -58,6 +58,9 @@
   
 </head>
 <body>
+  {% if tournament_enabled|default(false) %}
+  <nav aria-label="Main navigation"><a href="{{ url_for('tournament_page') }}">Tournament playground &rarr;</a></nav>
+  {% endif %}
   <h1>International Football Predictor</h1>
   <p>Estimate match outcome probabilities using historical results.</p>
 
@@ -119,6 +122,7 @@
     are refreshed; this app does not fetch live match results.
   </p>
   <div class="note">
+    {% if result %}
     <p>
       Last recorded competitive match:
       <br>
@@ -129,6 +133,7 @@
       {{ result.away_last_match[:10] if result.away_last_match else "Unavailable" }}
     </p>
 
+    {% endif %}
     <p>
       Historical teams remain selectable. Their predictions use their
       last available ratings and form; team strength is not adjusted

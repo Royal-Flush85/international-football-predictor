@@ -5,7 +5,6 @@ from historical men's international football results.
 
 [Open the live demo](https://international-football-predictor.onrender.com/).
 The running model version and results cutoff are shown with each prediction.
-The live service may still show v1.1 until the v2 release is deployed.
 
 ## What the prediction means
 
@@ -184,8 +183,46 @@ and rows with missing scores, leaving 31,089 competitive matches. Scores
 include extra time where played and exclude shootouts. June 27, 2026 is the
 prepared results cutoff, not the download date or a guarantee of coverage.
 
-## Possible extension
+## Tournament playground
 
-A separately labeled simplified tournament guessing feature could sample
-outcomes from the model using explicit tiebreaker assumptions. It is not
-implemented and would not constitute a validated official-format simulator.
+Visit `/tournament` to select eight different teams in a fixed knockout
+bracket. Slots 1-2, 3-4, 5-6 and 7-8 form the quarterfinals; adjacent winners
+meet in the semifinals. No automatic seeding or bracket draw is performed.
+
+- **Simulate one bracket:** sample all seven matches and display a champion.
+- **Estimate chances:** run 10,000 tournaments and show each team's frequency
+  of reaching the semifinals, reaching the final and winning the tournament.
+- **Optional seed:** reproduce a calculation with the same teams, ordering,
+  model, data and software environment. A blank seed generates a fresh value.
+
+All venues are neutral and team features remain fixed throughout each run.
+The underlying match model predicts recorded results, including extra time
+where played and excluding shootouts. A sampled draw is resolved with a
+50/50 random tiebreak, not a learned penalty model. Thus a team's chance to
+advance is its match-win probability plus half its draw probability.
+
+Match-card percentages describe that matchup's advancement chance. The
+probability table describes stage frequencies across repeated tournaments.
+The separately displayed bracket is one illustrative run, not the most likely
+bracket. Team ordering is retained when querying the match model; reversing
+teams need not yield exactly symmetric probabilities.
+
+The repeated simulation evaluates all 28 possible pairings once per request
+and reuses their probabilities, instead of making a model call for every
+simulated match. Simulated outcomes never modify saved ratings or real history.
+Each run produces four semifinalists, two finalists and one champion, so
+stage percentages sum to approximately 400%, 200% and 100%, respectively.
+Title display rounding preserves a 100.0% total.
+
+This is a **simplified tournament playground**, not an official World Cup
+simulator or a separately validated tournament forecasting model. It does not
+simulate scores, group-stage tiebreakers, injuries or changing form. More runs
+reduce random sampling variation, not uncertainty or bias in the match model.
+
+Check the engine, page and probability table locally:
+
+```bash
+python check_tournament.py
+python check_tournament_page.py
+python check_tournament_probabilities.py
+```
